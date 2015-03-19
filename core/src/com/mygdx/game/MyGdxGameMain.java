@@ -2,17 +2,24 @@ package com.mygdx.game;
 
 
 import geometries.Cubes.Cube;
+import geometries.Cubes.Cube2;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.Environment;
+import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.RenderableProvider;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector3;
 
 public class MyGdxGameMain implements ApplicationListener {
 	public Environment environment;
@@ -23,6 +30,8 @@ public class MyGdxGameMain implements ApplicationListener {
 	public ModelInstance instance;
 	public ModelInstance instance2;
 	public Cube cub;
+	public Cube2 cub2;
+	public Vector3 position1;
 	
 	
 
@@ -46,29 +55,61 @@ public class MyGdxGameMain implements ApplicationListener {
 	
 		//draw objects
 	    cub = new Cube();
-	   
+	    cub2 = new Cube2();
 		instance = new ModelInstance(cub.cubeInstance());
-		
+		position1 = new Vector3();
+		position1.set(5, 5, 5);
+		instance.transform.setToTranslation(position1);
+		instance2 = new ModelInstance(cub2.cubeInstance());
 		
 		
 	
 	}
-
+	//MASTER HILO PRINCIPAL
 	@Override
 	public void render() {
 		camController.update();
-		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+		//Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 		Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
-
+		
 		modelBatch.begin(cam);
 		modelBatch.render(instance,environment);
+		//instance.transform.rotate(1, 0, 0, 0.1f);
+		modelBatch.render(instance2,environment);
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+			if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+				
+				position1.set(position1.x+0.1f,position1.y,position1.z);
+				instance.transform.getTranslation(position1);
+			}
+			
+			 instance.transform.setTranslation(position1.x+0.1f,position1.y,position1.z);
+			 System.out.println(position1.x);
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+			if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+				
+				position1.set(position1.x-0.1f,position1.y,position1.z);
+				instance.transform.getTranslation(position1);
+				
+			}
+			
+			
+			 instance.transform.setTranslation(position1.x-0.1f,position1.y,position1.z);
+			 System.out.println(position1.x);
+		}
+	
+		 
+		
+		
+		
 		modelBatch.end();
 	}
 
 	@Override
 	public void dispose() {
 		modelBatch.dispose();
-		//cub.cubDispose();
+		cub.cubDispose();
 		
 	}
 
