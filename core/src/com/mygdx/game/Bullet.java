@@ -8,6 +8,8 @@ public class Bullet {
 	public Player player;
 	public int index;
 	
+	//position, speed etc..
+	
 	public Bullet(float r, float g, float b, Player player, int index)
 	{
 		this.r = r;
