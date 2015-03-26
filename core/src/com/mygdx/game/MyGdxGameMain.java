@@ -7,14 +7,18 @@ import geometries.Cubes.Cube2;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.Environment;
+import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.RenderableProvider;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 
 public class MyGdxGameMain implements ApplicationListener {
@@ -38,29 +42,25 @@ public class MyGdxGameMain implements ApplicationListener {
         environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
 		modelBatch = new ModelBatch();
 		
+		cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(),
+				Gdx.graphics.getHeight());
+		cam.position.set(10f, 10f, 10f);
+		cam.lookAt(0, 0, 0);
+		cam.near = 1f;
+		cam.far = 300f;
+		cam.update();
+		camController = new CameraInputController(cam);
+		Gdx.input.setInputProcessor(camController);
+		
+	
 		//draw objects
 	    cub = new Cube();
 	    cub2 = new Cube2();
 		instance = new ModelInstance(cub.cubeInstance());
 		position1 = new Vector3();
-		position1.set(5f, 3f, 2.5f);
+		position1.set(5, 5, 5);
 		instance.transform.setToTranslation(position1);
 		instance2 = new ModelInstance(cub2.cubeInstance());
-		
-		//Cam
-		cam = new PerspectiveCamera(80, Gdx.graphics.getWidth(),
-				Gdx.graphics.getHeight());
-		cam.position.set(10f, 10f, 10f);
-		cam.lookAt(position1);
-		cam.near =1f;
-		cam.far = 300f;
-		cam.rotate(-38, 0, 1, 0);
-		cam.update();
-		//camController = new CameraInputController(cam);
-		//Gdx.input.setInputProcessor(camController);
-		
-	
-		
 		
 		
 	
@@ -68,11 +68,11 @@ public class MyGdxGameMain implements ApplicationListener {
 	//MASTER HILO PRINCIPAL
 	@Override
 	public void render() {
-		//camController.update();
-		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+		camController.update();
+		//Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 		Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
 		
-		
+		modelBatch.begin(cam);
 		modelBatch.render(instance,environment);
 		//instance.transform.rotate(1, 0, 0, 0.1f);
 		modelBatch.render(instance2,environment);
@@ -84,11 +84,7 @@ public class MyGdxGameMain implements ApplicationListener {
 			}
 			
 			 instance.transform.setTranslation(position1.x+0.1f,position1.y,position1.z);
-			 System.out.println("position"+position1.x);
-			 
-			 cam.lookAt(position1);
-			 cam.position.set(position1.x,10,10);
-			 
+			 System.out.println(position1.x);
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
 			if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
@@ -100,18 +96,13 @@ public class MyGdxGameMain implements ApplicationListener {
 			
 			
 			 instance.transform.setTranslation(position1.x-0.1f,position1.y,position1.z);
-			 System.out.println("position"+position1.x);
-			
-			 cam.lookAt(position1);
-			 cam.position.set(position1.x,10,10);
-			
-			
+			 System.out.println(position1.x);
 		}
 	
 		 
-		cam.update();
 		
-		modelBatch.begin(cam);
+		
+		
 		modelBatch.end();
 	}
 
