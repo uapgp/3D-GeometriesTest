@@ -15,7 +15,7 @@ public class Cube2 {
 		// TODO Auto-generated constructor stub
 		
 		ModelBuilder modelBuilder = new ModelBuilder();
-		model = modelBuilder.createBox(5f, 5f, 5f,new Material(ColorAttribute.createDiffuse(Color.GREEN)),
+		model = modelBuilder.createBox(50f, 5f, 5f,new Material(ColorAttribute.createDiffuse(Color.TEAL)),
 				Usage.Position | Usage.Normal);
 		
 		
