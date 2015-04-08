@@ -79,11 +79,11 @@ public class MyGdxGameMain implements ApplicationListener {
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
 			if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
 				
-				position1.set(position1.x+0.1f,position1.y,position1.z);
+				position1.set(position1.x-0.1f,position1.y,position1.z);
 				instance.transform.getTranslation(position1);
 			}
 			
-			 instance.transform.setTranslation(position1.x+0.1f,position1.y,position1.z);
+			 instance.transform.setTranslation(position1.x-0.1f,position1.y,position1.z);
 			 System.out.println("position"+position1.x);
 			 
 			 cam.lookAt(position1);
@@ -93,13 +93,13 @@ public class MyGdxGameMain implements ApplicationListener {
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
 			if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
 				
-				position1.set(position1.x-0.1f,position1.y,position1.z);
+				position1.set(position1.x+0.1f,position1.y,position1.z);
 				instance.transform.getTranslation(position1);
 				
 			}
 			
 			
-			 instance.transform.setTranslation(position1.x-0.1f,position1.y,position1.z);
+			 instance.transform.setTranslation(position1.x+0.1f,position1.y,position1.z);
 			 System.out.println("position"+position1.x);
 			
 			 cam.lookAt(position1);
