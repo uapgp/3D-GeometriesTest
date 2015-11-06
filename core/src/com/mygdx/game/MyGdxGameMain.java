@@ -66,6 +66,8 @@ public class MyGdxGameMain implements ApplicationListener {
 	
 	}
 	//MASTER HILO PRINCIPAL
+	
+
 	@Override
 	public void render() {
 		//camController.update();
@@ -76,6 +78,41 @@ public class MyGdxGameMain implements ApplicationListener {
 		modelBatch.render(instance,environment);
 		//instance.transform.rotate(1, 0, 0, 0.1f);
 		modelBatch.render(instance2,environment);
+		
+	
+		 P_Actions();
+		cam.update();
+		
+		modelBatch.begin(cam);
+		modelBatch.end();
+	}
+
+	@Override
+	public void dispose() {
+		modelBatch.dispose();
+		cub.cubDispose();
+		
+	}
+
+	@Override
+	public void resize(int width, int height) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void resume() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void P_Actions(){
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
 			if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
 				
@@ -107,36 +144,12 @@ public class MyGdxGameMain implements ApplicationListener {
 			
 			
 		}
+		
+	}
 	
-		 
-		cam.update();
+	public void Colisions(){
 		
-		modelBatch.begin(cam);
-		modelBatch.end();
-	}
-
-	@Override
-	public void dispose() {
-		modelBatch.dispose();
-		cub.cubDispose();
 		
 	}
 
-	@Override
-	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-
-	}
 }
